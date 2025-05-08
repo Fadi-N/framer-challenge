@@ -8,6 +8,8 @@ import {useInView, motion} from "motion/react";
 import Slider from "@/components/slider";
 
 export default function Home() {
+    const [daysLeft, setDaysLeft] = React.useState<number>(0);
+
     const parentRef = useRef<HTMLDivElement | null>(null);
     const childrenRef = useRef<HTMLDivElement | null>(null);
     const p1Ref = useRef<HTMLParagraphElement | null>(null);
@@ -85,7 +87,7 @@ export default function Home() {
                                     animate={p2InView ? {opacity: 1, y: 0} : {}}
                                     transition={{duration: 0.5, delay: 0.1}}
                                 >
-                                    Only {} days left
+                                    Only {daysLeft} days left
                                 </motion.p>
                             </div>
                             <div>
@@ -101,7 +103,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center text-white space-y-5">
-                            <CountdownTimer/>
+                            <CountdownTimer setDaysLeft={setDaysLeft}/>
                             <button
                                 className="flex lg:hidden items-center justify-center border border-white hover:border-[#5542f4] rounded-[0.875rem] px-6 py-3.5 h-11 hover:bg-[#5542f4] hover:cursor-pointer transition-colors w-full">
                                 Buy Tickets
