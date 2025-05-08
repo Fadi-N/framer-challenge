@@ -1,13 +1,25 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from "next/image";
 import {motion, useScroll, useSpring, useTransform} from "motion/react";
 
 const BallAnimation = () => {
     const {scrollYProgress} = useScroll();
+    const [screenRatio, setScreenRatio] = useState(1);
 
-    const xRaw = useTransform(scrollYProgress, [0, 0.15, 0.3, 0.5], [200, 0, -300, -500]);
-    const yRaw = useTransform(scrollYProgress, [0, 0.15, 0.3, 0.5], [300, 50, -300, -500]);
-    const scaleRaw = useTransform(scrollYProgress, [0, 0.3, 0.5], [0.2, 0.6, 1.0]);
+    useEffect(() => {
+        const update = () => {
+            const baseHeight = 1080; // zakładamy, że Full HD to 1.0
+            const current = window.innerHeight;
+            setScreenRatio(current / baseHeight);
+        };
+        update();
+        window.addEventListener('resize', update);
+        return () => window.removeEventListener('resize', update);
+    }, []);
+
+    const xRaw = useTransform(scrollYProgress, [0, 0.1, 0.3, 0.7], [300, 0, -500, -500]);
+    const yRaw = useTransform(scrollYProgress, [0, 0.1, 0.3, 0.7], [300, 0, -500, -500]);
+    const scaleRaw = useTransform(scrollYProgress, [0, 0.3, 0.5], [0.2, 0.7, 1.0]);
     const rotateRaw = useTransform(scrollYProgress, [0, 0.3], [0, 90]);
     const opacityRaw = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
 
@@ -20,7 +32,7 @@ const BallAnimation = () => {
 
     return (
         <motion.div
-            className="absolute top-0 left-0 z-10"
+            className="hidden lg:block absolute top-0 left-0 z-10"
             style={{x, y, scale, rotate, opacity}}
         >
             <Image
