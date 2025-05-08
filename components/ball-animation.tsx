@@ -1,21 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Image from "next/image";
 import {motion, useScroll, useSpring, useTransform} from "motion/react";
 
 const BallAnimation = () => {
     const {scrollYProgress} = useScroll();
-    const [screenRatio, setScreenRatio] = useState(1);
-
-    useEffect(() => {
-        const update = () => {
-            const baseHeight = 1080; // zakładamy, że Full HD to 1.0
-            const current = window.innerHeight;
-            setScreenRatio(current / baseHeight);
-        };
-        update();
-        window.addEventListener('resize', update);
-        return () => window.removeEventListener('resize', update);
-    }, []);
 
     const xRaw = useTransform(scrollYProgress, [0, 0.1, 0.3, 0.7], [300, 0, -500, -500]);
     const yRaw = useTransform(scrollYProgress, [0, 0.1, 0.3, 0.7], [300, 0, -500, -500]);
