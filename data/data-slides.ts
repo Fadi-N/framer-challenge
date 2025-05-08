@@ -1,4 +1,11 @@
-export const slides = [
+export interface Slide {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+}
+
+export const slides: Slide[] = [
     {
         id: "slide-1",
         title: "World-Class Golfing Experience",
@@ -25,4 +32,4 @@ export const slides = [
     },
 ]
 
-export const tabNames = ["Experience", "Course", "Pros Play", "Natural"];
+export const tabNames: string[] = ["Experience", "Course", "Pros Play", "Natural"];

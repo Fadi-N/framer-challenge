@@ -1,13 +1,13 @@
 import React, {Fragment, useState} from 'react';
 import Image from "next/image";
 import {slides, tabNames} from "@/data/data-slides";
-import {AnimatePresence, motion} from "motion/react";
+import {AnimatePresence, motion, PanInfo, Variants} from "motion/react";
 
 
 const Slider = () => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [direction, setDirection] = useState(0);
-    const [previousSlide, setPreviousSlide] = useState(0);
+    const [currentSlide, setCurrentSlide] = useState<number>(0);
+    const [direction, setDirection] = useState<number>(0);
+    const [previousSlide, setPreviousSlide] = useState<number>(0);
 
     const handleSlideChange = (newIndex: number) => {
         if (newIndex === currentSlide) return;
@@ -17,7 +17,7 @@ const Slider = () => {
         setCurrentSlide(newIndex);
     }
 
-    const handleDragEnd = (e: any, info: any) => {
+    const handleDragEnd = (e: PointerEvent | TouchEvent | MouseEvent, info: PanInfo) => {
         if (info.offset.x < -100 && currentSlide < slides.length - 1) {
             handleSlideChange(currentSlide + 1);
         } else {
@@ -25,11 +25,11 @@ const Slider = () => {
         }
     }
 
-    const slideVariants = {
+    const slideVariants: Variants = {
         enter: (direction: number) => ({
             x: direction > 0 ? "100%" : "-100%",
             opacity: 0,
-            scale: 0.85,
+            scale: 0.5,
         }),
         center: {
             x: 0,
@@ -44,7 +44,7 @@ const Slider = () => {
         exit: (direction: number) => ({
             x: direction > 0 ? "-100%" : "100%",
             opacity: 0,
-            scale: 0.85,
+            scale: 0.5,
             transition: {
                 type: "spring",
                 stiffness: 300,
@@ -56,6 +56,7 @@ const Slider = () => {
     return (
         <div
             className="flex justify-between relative bg-white rounded-3xl px-6 py-8 lg:py-10 lg:pl-24 lg:pr-10 my-20 max-h-[34.75rem] lg:h-[29rem] xl:h-[26.5rem]">
+            {/*Vertical slider nav*/}
             <div className="flex flex-col absolute start-12 top-0 justify-center h-full">
                 {Array.from({length: 4}).map((_, index) => (
                     <div
@@ -88,20 +89,23 @@ const Slider = () => {
                     </div>
                 ))}
             </div>
+            {/*Slides*/}
             <div className="flex-1 flex relative overflow-hidden">
                 <AnimatePresence custom={direction} initial={false}>
                     <motion.div
                         key={`previous-${previousSlide}`}
-                        className="flex-1 flex absolute  top-0 left-0 w-full h-full"
+                        className="flex-1 flex absolute space-x-12 top-0 left-0 w-full h-full"
                         custom={direction}
                         variants={slideVariants}
                         initial="center"
                         animate="exit"
                         exit="exit"
                     >
-                        <div className="flex-1 flex flex-col pb-10 justify-evenly">
-                            <h3 className="text-3xl">{slides[previousSlide].title}</h3>
-                            <p className="text-ld max-w-[40ch]">{slides[previousSlide].description}</p>
+                        <div className="flex-1 pt-10">
+                            <div className="flex-1 flex flex-col pb-10 justify-evenly space-y-10">
+                                <h3 className="text-3xl">{slides[previousSlide].title}</h3>
+                                <p className="text-ld max-w-[40ch]">{slides[previousSlide].description}</p>
+                            </div>
                         </div>
                         <div className="flex-1">
                             <div className="flex-1 relative h-full">
@@ -117,7 +121,7 @@ const Slider = () => {
 
                     <motion.div
                         key={`current-${currentSlide}`}
-                        className="flex-1 flex absolute top-0 left-0 w-full h-full"
+                        className="flex-1 flex absolute space-x-24 top-0 left-0 w-full h-full"
                         custom={direction}
                         variants={slideVariants}
                         initial="enter"
@@ -128,13 +132,15 @@ const Slider = () => {
                         onDragEnd={handleDragEnd}
                         whileTap={{scale: 0.97}}
                     >
-                        <div className="flex-1 flex flex-col pb-10 justify-evenly">
-                            <h3 className="text-3xl">{slides[currentSlide].title}</h3>
-                            <p className="text-ld max-w-[40ch]">{slides[currentSlide].description}</p>
+                        <div className="flex-1 pt-10">
+                            <div className="flex-1 flex flex-col pb-10 justify-evenly space-y-10">
+                                <h3 className="text-3xl">{slides[currentSlide].title}</h3>
+                                <p className="text-ld max-w-[40ch]">{slides[currentSlide].description}</p>
+                            </div>
                         </div>
                         <div className="flex-1 relative h-full">
                             <Image
-                                className="rounded-xl object-cover"
+                                className="rounded-xl object-cover object-bottom"
                                 src={slides[currentSlide].image}
                                 alt="golfer"
                                 fill
@@ -143,8 +149,9 @@ const Slider = () => {
                     </motion.div>
                 </AnimatePresence>
             </div>
+            {/*Horizontal slider nav*/}
             <div className="flex space-x-2.5 absolute bottom-10">
-            {tabNames.map((label, index) => (
+                {tabNames.map((label, index) => (
                     <Fragment key={index}>
                         <button
                             className={`text-xs hover:cursor-pointer hover:text-black hover:bg-[#ebecfa] px-2.5 py-0.5 leading-7 rounded-lg transition-colors ${currentSlide === index ? "bg-[#ebecfa] text-black" : "bg-none text-gray-500"}`}
