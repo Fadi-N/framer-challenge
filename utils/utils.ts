@@ -1,4 +1,6 @@
-export const getTimeLeft = (targetDate: Date) => {
+import {TimeLeft} from "@/types/countdown-timer";
+
+export const getTimeLeft = (targetDate: Date) : TimeLeft => {
     const now = new Date().getTime();
     const diff = targetDate.getTime() - now;
 

@@ -8,23 +8,23 @@ import {useInView, motion} from "motion/react";
 import Slider from "@/components/slider";
 
 export default function Home() {
-    const parentRef = useRef(null);
-    const childrenRef = useRef(null);
-    const p1Ref = useRef(null);
-    const p2Ref = useRef(null);
-    const buttonRef = useRef(null);
+    const parentRef = useRef<HTMLDivElement | null>(null);
+    const childrenRef = useRef<HTMLDivElement | null>(null);
+    const p1Ref = useRef<HTMLParagraphElement | null>(null);
+    const p2Ref = useRef<HTMLParagraphElement | null>(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     const isInView = useInView(childrenRef, {once: true, margin: "-50px"})
     const p1InView = useInView(p1Ref, {once: true, margin: "-50px"});
     const p2InView = useInView(p2Ref, {once: true, margin: "-50px"});
     const buttonInView = useInView(buttonRef, {once: true, margin: "-50px"});
 
-
     return (
         <div className="container mx-auto px-4 lg:px-8">
-
+            {/*Challenge 2*/}
             <Slider/>
 
+            {/*Challenge 1*/}
             <motion.div
                 ref={parentRef}
                 className="lg:relative mx-auto max-w-xl lg:max-w-screen"
@@ -111,27 +111,11 @@ export default function Home() {
                 </motion.div>
             </motion.div>
 
-            <div className="flex flex-col space-y-12 py-20">
-                {Array.from({length: 5}).map((_, i) => (
-                    <div key={i} className="bottom-0 w-full p-6">
-                        <div
-                            className="flex justify-between px-6 lg:px-12 py-10 lg:py-11 bg-orange-500 rounded-3xl lg:rounded-xl">
-                            <div className="flex flex-col justify-between text-white space-y-5">
-                                <div>
-                                    <p>September 22nd, 2025</p>
-                                    <p className="text-[2rem] lg:text-[2.75rem] font-semibold">Only {} days left</p>
-                                </div>
-                                <div>
-                                    <button
-                                        className="flex items-center border border-white rounded-[0.875rem] px-6 py-3.5 h-11">
-                                        Buy Tickets
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+            {Array.from({length: 5}).map((_, index) => (
+                <Fragment key={index}>
+                    <Slider/>
+                </Fragment>
+            ))}
         </div>
     );
 }

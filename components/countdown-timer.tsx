@@ -1,13 +1,14 @@
 import {useEffect, useMemo, useRef, useState} from "react";
 import {motion, useInView} from "motion/react";
 import {getTimeLeft} from "@/utils/utils";
+import {TimeLeft} from "@/types/countdown-timer";
 
 const CountdownTimer = () => {
     const targetDate = useMemo(() => new Date("2025-09-22T00:00:00"), []);
-    const [timeLeft, setTimeLeft] = useState(getTimeLeft(targetDate));
+    const [timeLeft, setTimeLeft] = useState<TimeLeft>(getTimeLeft(targetDate));
 
 
-    const countDownRef = useRef(null);
+    const countDownRef = useRef<HTMLDivElement | null>(null);
     const countDownInView = useInView(countDownRef, {once: true, margin: "-50px"})
 
     useEffect(() => {

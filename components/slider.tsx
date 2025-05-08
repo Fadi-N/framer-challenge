@@ -10,7 +10,7 @@ const Slider = () => {
     const [direction, setDirection] = useState<number>(0);
     const [previousSlide, setPreviousSlide] = useState<number>(0);
 
-    const sliderRef = React.useRef<HTMLDivElement>(null);
+    const sliderRef = React.useRef<HTMLDivElement | null>(null);
 
     const handleSlideChange = (newIndex: number) => {
         if (newIndex === currentSlide) return;

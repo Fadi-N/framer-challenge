@@ -1,9 +1,4 @@
-export interface Slide {
-    id: string;
-    title: string;
-    description: string;
-    image: string;
-}
+import {Slide} from "@/types/slider";
 
 export const slides: Slide[] = [
     {
