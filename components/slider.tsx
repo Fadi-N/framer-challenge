@@ -10,6 +10,8 @@ const Slider = () => {
     const [direction, setDirection] = useState<number>(0);
     const [previousSlide, setPreviousSlide] = useState<number>(0);
 
+    const sliderRef = React.useRef<HTMLDivElement>(null);
+
     const handleSlideChange = (newIndex: number) => {
         if (newIndex === currentSlide) return;
 
@@ -55,8 +57,13 @@ const Slider = () => {
     }
 
     return (
-        <div
-            className="flex flex-col lg:flex-row justify-between relative bg-white rounded-3xl px-6 py-8 lg:py-10 lg:pl-24 lg:pr-10 my-20 max-h-[34.75rem] h-[29rem] xl:h-[26.5rem] mx-auto max-w-xl lg:max-w-screen">
+        <motion.div
+            ref={sliderRef}
+            className="flex flex-col lg:flex-row justify-between relative bg-white rounded-3xl px-6 py-8 lg:py-10 lg:pl-24 lg:pr-10 my-20 max-h-[34.75rem] h-[29rem] xl:h-[26.5rem] mx-auto max-w-xl lg:max-w-screen"
+            initial={{y: 50, opacity: 0}}
+            animate={{y: 0, opacity: 1}}
+            transition={{duration: 0.8, ease: "easeInOut"}}
+        >
             {/*Vertical slider nav - Desktop*/}
             <div className="hidden lg:flex flex-col absolute start-12 top-0 justify-center h-full">
                 <VerticalSliderNav
@@ -144,7 +151,7 @@ const Slider = () => {
                     />
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
