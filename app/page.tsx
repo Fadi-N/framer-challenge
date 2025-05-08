@@ -3,8 +3,9 @@
 import Image from "next/image";
 import BallAnimation from "@/components/ball-animation";
 import CountdownTimer from "@/components/countdown-timer";
-import {useRef} from "react";
+import React, {Fragment, useRef} from "react";
 import {useInView, motion} from "motion/react";
+import Slider from "@/components/slider";
 
 export default function Home() {
     const parentRef = useRef(null);
@@ -14,31 +15,15 @@ export default function Home() {
     const buttonRef = useRef(null);
 
     const isInView = useInView(childrenRef, {once: true, margin: "-50px"})
-    const p1InView = useInView(p1Ref, { once: true, margin: "-50px" });
-    const p2InView = useInView(p2Ref, { once: true, margin: "-50px" });
-    const buttonInView = useInView(buttonRef, { once: true, margin: "-50px" });
+    const p1InView = useInView(p1Ref, {once: true, margin: "-50px"});
+    const p2InView = useInView(p2Ref, {once: true, margin: "-50px"});
+    const buttonInView = useInView(buttonRef, {once: true, margin: "-50px"});
 
 
     return (
         <div className="container mx-auto px-4 lg:px-8">
-            <div className="bottom-0 w-full p-6 pb-48">
-                <div
-                    className="flex justify-between px-6 lg:px-12 py-10 lg:py-11 bg-orange-500 rounded-3xl lg:rounded-xl">
-                    <div className="flex flex-col justify-between text-white space-y-5">
-                        <div>
-                            <p>September 22nd, 2025</p>
-                            <p className="text-[2rem] lg:text-[2.75rem] font-semibold">Only {} days left</p>
-                        </div>
-                        <div>
-                            <button
-                                className="flex items-center border border-white rounded-[0.875rem] px-6 py-3.5 h-11">
-                                Buy Tickets
-                            </button>
-                        </div>
-                    </div>
-                    <div>timer</div>
-                </div>
-            </div>
+
+            <Slider/>
 
             <motion.div
                 ref={parentRef}
@@ -87,18 +72,18 @@ export default function Home() {
                             <div>
                                 <motion.p
                                     ref={p1Ref}
-                                    initial={{ opacity: 0, y: 50 }}
-                                    animate={p1InView ? { opacity: 1, y: 0 } : {}}
-                                    transition={{ duration: 0.5, delay: 0.1 }}
+                                    initial={{opacity: 0, y: 50}}
+                                    animate={p1InView ? {opacity: 1, y: 0} : {}}
+                                    transition={{duration: 0.5, delay: 0.1}}
                                 >
                                     September 22nd, 2025
                                 </motion.p>
                                 <motion.p
                                     ref={p2Ref}
                                     className="text-[2rem] lg:text-[2.75rem] font-semibold"
-                                    initial={{ opacity: 0, y: 50 }}
-                                    animate={p2InView ? { opacity: 1, y: 0 } : {}}
-                                    transition={{ duration: 0.5, delay: 0.1 }}
+                                    initial={{opacity: 0, y: 50}}
+                                    animate={p2InView ? {opacity: 1, y: 0} : {}}
+                                    transition={{duration: 0.5, delay: 0.1}}
                                 >
                                     Only {} days left
                                 </motion.p>
@@ -107,9 +92,9 @@ export default function Home() {
                                 <motion.button
                                     ref={buttonRef}
                                     className="hidden lg:flex items-center border border-white hover:border-[#5542f4] rounded-[0.875rem] px-6 py-3.5 h-11 hover:bg-[#5542f4] hover:cursor-pointer transition-colors"
-                                    initial={{ opacity: 0, y: 50 }}
-                                    animate={buttonInView ? { opacity: 1, y: 0 } : {}}
-                                    transition={{ duration: 0.5, delay: 0.1 }}
+                                    initial={{opacity: 0, y: 50}}
+                                    animate={buttonInView ? {opacity: 1, y: 0} : {}}
+                                    transition={{duration: 0.5, delay: 0.1}}
                                 >
                                     Buy Tickets
                                 </motion.button>
